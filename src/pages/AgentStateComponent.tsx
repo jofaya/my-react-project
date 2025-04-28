@@ -26,7 +26,7 @@ const AgentStateComponent = () => {
       <TabsStatus/>
       <ModalConfirmation setOpenModalSubmit={setOpenModalSubmit} setAgentStatePersistant={setAgentStatePersistant} setSubmitStatus={setSubmitStatus}/>
       <ModalSubmit openModalSubmit={openModalSubmit} setAgentStatePersistant={setAgentStatePersistant} setOpenModalSubmit={setOpenModalSubmit} setOpenModalTimer={setOpenModalTimer} setSubmitStatus={setSubmitStatus}/>
-      <ModalTimer open={openModalTimer} handleClose={() => setOpenModalTimer(false)} agentStatePersistant={agentStatePersistant}/>
+      <ModalTimer open={openModalTimer} handleClose={() => {setOpenModalTimer(false);setAgentStatePersistant('Production')}} agentStatePersistant={agentStatePersistant}/>
     </div>
   );
 };
