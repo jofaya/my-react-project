@@ -3,16 +3,16 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import TableModalSubmit from './TableModalSubmit';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import { RootState } from '../../../redux/store';
+import { useSelector } from 'react-redux';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -25,21 +25,43 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 interface ModalSubmitProps {
     openModalSubmit: boolean;
+    setAgentStatePersistant:React.Dispatch<React.SetStateAction<string>>;
     setOpenModalSubmit:React.Dispatch<React.SetStateAction<boolean>>;
     setOpenModalTimer:React.Dispatch<React.SetStateAction<boolean>>;
+    setSubmitStatus:React.Dispatch<React.SetStateAction<boolean>>;
 }
   
 
-export default function ModalSubmit({ openModalSubmit,setOpenModalSubmit,setOpenModalTimer }: ModalSubmitProps) {
+export default function ModalSubmit({ openModalSubmit,setOpenModalSubmit,setOpenModalTimer,setSubmitStatus,setAgentStatePersistant }: ModalSubmitProps) {
   const [value,setValue] = React.useState<number>(0)
   const [status,setStatus] = React.useState<string>('')
+  const agentState = useSelector((state: RootState) => state.agentState.agentState);
+
   const handleCloseShare = () => {
-    setOpenModalSubmit(false);
-    setOpenModalTimer(true)
+    if(agentState?.length > 0 && !agentState.includes("Pause")){
+      console.log('if');
+      setOpenModalSubmit(false);
+      setSubmitStatus(true)
+      setAgentStatePersistant(agentState)
+    }else{
+      setOpenModalSubmit(false);
+      setOpenModalTimer(true)
+      setSubmitStatus(true)
+    }
+    
   };
   const handleClose = () => {
     setOpenModalSubmit(false);
   };
+
+  console.log('agentState',agentState);
+  
+
+  React.useEffect(() => {
+    if(agentState?.length > 0 && (!agentState.includes("Pause") || agentState.includes('Attente'))){
+      setOpenModalSubmit(agentState?.length > 0 && (!agentState.includes("Pause") && !agentState.includes("Attente")));
+    }
+  }, [agentState]);
 
   return (
     <React.Fragment>
@@ -65,9 +87,6 @@ export default function ModalSubmit({ openModalSubmit,setOpenModalSubmit,setOpen
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
-          <TableModalSubmit/>
-        </DialogContent>
         <DialogActions>
         <FormControl>
         <InputLabel id="status-label">Status</InputLabel>
@@ -76,7 +95,7 @@ export default function ModalSubmit({ openModalSubmit,setOpenModalSubmit,setOpen
             value={status}
             label="Status"
             onChange={(e) => setStatus(e.target.value)}
-            sx={{ height: 56, fontSize: '1.1rem',width:'150px' }}
+            sx={{ height: 56, fontSize: '1.1rem',width:'350px' }}
         >
             <MenuItem value="en_attente">En Cours</MenuItem>
             <MenuItem value="validé">Validé</MenuItem>

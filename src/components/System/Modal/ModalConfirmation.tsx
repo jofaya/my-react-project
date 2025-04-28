@@ -11,6 +11,7 @@ import { setAgentState } from '../../../redux/agentStateSlice';
 
 
 interface ModalConfirmationProps {
+    setSubmitStatus:React.Dispatch<React.SetStateAction<boolean>>;
     setOpenModalSubmit:React.Dispatch<React.SetStateAction<boolean>>;
     setAgentStatePersistant:React.Dispatch<React.SetStateAction<string>>;
 }
@@ -21,7 +22,7 @@ export default function ModalConfirmation({ setOpenModalSubmit,setAgentStatePers
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    setOpen(agentState?.length > 0);
+    setOpen(agentState?.length > 0 && agentState.includes("Pause"));
   }, [agentState]);
 
   const handleStateAgent = () => {

@@ -5,7 +5,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import { Outlet } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Tooltip from "@mui/material/Tooltip";
+import { Outlet, useNavigate } from "react-router-dom";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DrawerHeader from "../components/templates/DrawerHeader";
 import AppBar from "../components/templates/AppBar";
@@ -15,6 +17,7 @@ import { getTheme } from "../utils/Theme";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import NestedList from "../components/System/NestedList";
+
 const drawerWidth = 250;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
@@ -44,6 +47,12 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
 const Layouts = () => {
   const themeMode = useSelector((state: RootState) => state.theme.mode);
   const theme = getTheme(themeMode);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   return (
     <Box sx={{ display: "flex", height: "100vh", maxHeight: "100vh" }}>
@@ -57,21 +66,42 @@ const Layouts = () => {
           backgroundColor: theme.palette.primary.main,
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Box sx={{ flexGrow: 1 }} />
+
           <SearchBar />
+
           <IconButton
             color="inherit"
             aria-label="notifications"
             edge="end"
             size="large"
-            sx={{ mr: 1 }}
+            sx={{
+              ml: 2,
+              backgroundColor: "rgba(255,255,255,0.08)",
+              "&:hover": { backgroundColor: "rgba(255,255,255,0.16)" },
+            }}
           >
-            <Badge badgeContent={2} color="secondary">
+            <Badge badgeContent={5} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
+
+          <Tooltip title="Logout">
+            <IconButton
+              color="inherit"
+              onClick={handleLogout}
+              sx={{
+                ml: 4,
+                backgroundColor: "rgba(255,255,255,0.08)",
+                "&:hover": { backgroundColor: "rgba(255,255,255,0.16)" },
+              }}
+            >
+              <LogoutIcon />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
+
       </AppBar>
 
       <Drawer
@@ -102,10 +132,10 @@ const Layouts = () => {
           }}
         >
           <Typography sx={{ marginInline: 2 }} variant="h6" noWrap>
-            System
+            ROMEO
           </Typography>
         </DrawerHeader>
-        <NestedList/>
+        <NestedList />
       </Drawer>
 
       <Main open={true}>

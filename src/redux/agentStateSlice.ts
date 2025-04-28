@@ -4,10 +4,9 @@ interface AgentState {
   agentState: string;
 }
 
-// const savedMode = localStorage.getItem("theme") as "light" | "dark" | null;
 
 const initialState: AgentState = {
-  agentState: "",
+  agentState: "Attente d'affectation",
 };
 
 const agentStateSlice = createSlice({
