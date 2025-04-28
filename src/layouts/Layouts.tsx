@@ -133,7 +133,11 @@ const Layouts = () => {
           }}
         >
           <Typography sx={{ marginInline: 2 }} variant="h6" noWrap>
+<<<<<<< HEAD
             ROMEO
+=======
+            Kenny ANDRIANALISOA
+>>>>>>> ee0de59 (update)
           </Typography>
         </DrawerHeader>
         <NestedList />

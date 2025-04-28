@@ -51,4 +51,8 @@ export default tseslint.config({
     ...reactDom.configs.recommended.rules,
   },
 })
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> ee0de59 (update)
