@@ -43,11 +43,7 @@ function createData(
 }
 
 const initialRows = [
-<<<<<<< HEAD
-  createData("Attente d'affectation", 'IN', '1324171354', '3287263', 'INDE', 0),
-=======
   createData("Attente d'affectation", 'IN', 'Mariner', 'Marven', 'Iron Man', 0),
->>>>>>> ee0de59 (update)
 ];
 
 export default function TableStatus({

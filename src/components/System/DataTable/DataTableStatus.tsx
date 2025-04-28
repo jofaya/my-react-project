@@ -21,22 +21,14 @@ const columns: Column[] = [
   { id: 'nom_projet', label: 'Nom Projet', minWidth: 100 },
   {
     id: 'hit',
-<<<<<<< HEAD
-    label: 'Hit',
-=======
     label: 'Status',
->>>>>>> ee0de59 (update)
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'template',
-<<<<<<< HEAD
-    label: 'Template',
-=======
     label: 'Action',
->>>>>>> ee0de59 (update)
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
@@ -60,11 +52,7 @@ function createData(
 }
 
 const rows = [
-<<<<<<< HEAD
-  createData('India', 'IN', '1324171354', '3287263')
-=======
   createData('Nigel Marven', 'Mariner', 'En cours', '3287263')
->>>>>>> ee0de59 (update)
 ];
 
 export default function DataTableStatus() {
